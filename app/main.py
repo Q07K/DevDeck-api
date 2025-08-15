@@ -1,8 +1,19 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
 
 from app.core.config import settings
 from app.api.api import api_router
+from app.core.database import init_database
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """애플리케이션 라이프사이클 관리"""
+    # 시작 시 데이터베이스 초기화
+    init_database()
+    yield
+    # 종료 시 정리 작업 (필요시)
 
 
 def create_app() -> FastAPI:
@@ -14,6 +25,7 @@ def create_app() -> FastAPI:
         openapi_url=f"{settings.API_PREFIX}/openapi.json",
         docs_url=f"{settings.API_PREFIX}/docs",
         redoc_url=f"{settings.API_PREFIX}/redoc",
+        lifespan=lifespan,
     )
 
     # CORS 미들웨어 설정
