@@ -25,8 +25,9 @@ class Settings(BaseSettings):
     PORT: int = 8000
     DEBUG: bool = True
     
-    # 데이터베이스 설정 (필요시 사용)
-    DATABASE_URL: str = "sqlite:///./devdeck.db"
+    # 데이터베이스 설정 (DuckDB 사용)
+    DATABASE_URL: str = "duckdb:///./devdeck.duckdb"
+    DUCKDB_FILE: str = "./devdeck.duckdb"
     
     # JWT 설정 (필요시 사용)
     SECRET_KEY: str = "your-secret-key-change-this-in-production"
