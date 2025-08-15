@@ -1,9 +1,10 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
-from app.core.config import settings
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 from app.api.api import api_router
+from app.core.config import settings
 from app.core.database import init_database
 
 
@@ -22,9 +23,6 @@ def create_app() -> FastAPI:
         title=settings.PROJECT_NAME,
         description=settings.PROJECT_DESCRIPTION,
         version=settings.VERSION,
-        openapi_url=f"{settings.API_PREFIX}/openapi.json",
-        docs_url=f"{settings.API_PREFIX}/docs",
-        redoc_url=f"{settings.API_PREFIX}/redoc",
         lifespan=lifespan,
     )
 
